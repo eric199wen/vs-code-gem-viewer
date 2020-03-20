@@ -16,6 +16,40 @@ export function activate(context: vscode.ExtensionContext) {
 
   // context.subscriptions.push(disposable);
 
+  let terminal: vscode.Terminal;
+  const TERMINAL_NAME: string = 'Ruby Gem Viewer';
+
+  let runLine = vscode.commands.registerCommand('extension.gemViewer', () => {
+      vscode.window.setStatusBarMessage('Gem Viewer: Opening file', 3000);
+
+      if (vscode.window.activeTextEditor !== undefined) {
+          const editor: vscode.TextEditor = vscode.window.activeTextEditor;
+          const document: vscode.TextDocument = editor.document;
+
+          const start = editor.selection.start;
+          const end = editor.selection.end;
+          let word = document.getText(new vscode.Range(start, end));
+
+          issueCommand(`${word}`);
+      }
+  });
+
+  context.subscriptions.push(runLine);
+
+  function issueCommand(launcher_args: string): void {
+      const terminal = findOrCreateTerminal();
+
+      terminal.show();
+      terminal.sendText(`ruby ~/src/vs-code-gem-viewer/main.rb ${launcher_args}`);
+  }
+
+  function findOrCreateTerminal(): vscode.Terminal {
+      if (terminal === undefined) {
+          terminal = vscode.window.createTerminal(TERMINAL_NAME);
+      }
+
+      return terminal;
+  }
 }
 
 // this method is called when your extension is deactivated

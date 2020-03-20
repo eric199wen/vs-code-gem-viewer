@@ -19,3 +19,12 @@ def demodulize(path)
   end
 end
 
+# Add customized color to stdoutput
+RED = 31
+YELLOW = 33
+
+def colorize(color: YELLOW)
+  print "\e[#{color}m"
+  yield
+  print "\e[0m"
+end

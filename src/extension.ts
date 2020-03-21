@@ -20,35 +20,35 @@ export function activate(context: vscode.ExtensionContext) {
   const TERMINAL_NAME: string = 'Ruby Gem Viewer';
 
   let runLine = vscode.commands.registerCommand('extension.gemViewer', () => {
-      vscode.window.setStatusBarMessage('Gem Viewer: Opening file', 3000);
+    vscode.window.setStatusBarMessage('Gem Viewer: Opening file', 3000);
 
-      if (vscode.window.activeTextEditor !== undefined) {
-          const editor: vscode.TextEditor = vscode.window.activeTextEditor;
-          const document: vscode.TextDocument = editor.document;
+    if (vscode.window.activeTextEditor !== undefined) {
+    const editor: vscode.TextEditor = vscode.window.activeTextEditor;
+    const document: vscode.TextDocument = editor.document;
 
-          const start = editor.selection.start;
-          const end = editor.selection.end;
-          let word = document.getText(new vscode.Range(start, end));
+    const start = editor.selection.start;
+    const end = editor.selection.end;
+    let word = document.getText(new vscode.Range(start, end));
 
-          issueCommand(`${word}`);
-      }
+    issueCommand(`${word}`);
+    }
   });
 
   context.subscriptions.push(runLine);
 
   function issueCommand(launcher_args: string): void {
-      const terminal = findOrCreateTerminal();
+    const terminal = findOrCreateTerminal();
 
-      terminal.show();
-      terminal.sendText(`ruby ~/src/vs-code-gem-viewer/main.rb ${launcher_args}`);
+    terminal.show();
+    terminal.sendText(`ruby ~/src/vs-code-gem-viewer/gem_viewer/main.rb ${launcher_args}`);
   }
 
   function findOrCreateTerminal(): vscode.Terminal {
-      if (terminal === undefined) {
-          terminal = vscode.window.createTerminal(TERMINAL_NAME);
-      }
+    if (terminal === undefined) {
+        terminal = vscode.window.createTerminal(TERMINAL_NAME);
+    }
 
-      return terminal;
+    return terminal;
   }
 }
 

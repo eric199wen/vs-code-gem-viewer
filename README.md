@@ -1,7 +1,7 @@
 # Gem Viewer
   - Gem Viewer is a tool for easy accessing gem defined in your `Gemfile`.
 
-    <img src="https://media.giphy.com/media/MZ8rI0zuPZYDHcJyzn/giphy.gif"></img>
+    <img width=768 src="https://media.giphy.com/media/igUeL7dRfqe9OIt3Cg/giphy.gif"></img>
 
 ## Features
   - Load selected gem to VS Code workspace
